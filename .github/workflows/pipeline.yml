@@ -1,0 +1,33 @@
+name: Launchwise URA Pipeline
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # runs daily at 8am Singapore time (UTC+8)
+  workflow_dispatch:       # allows manual trigger from GitHub
+
+jobs:
+  run-pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run URA pipeline
+        run: python pipeline.py
+
+      - name: Commit output files
+        run: |
+          git config user.name "Launchwise Bot"
+          git config user.email "bot@launchwise.sg"
+          git add output/
+          git diff --staged --quiet || git commit -m "Daily URA data update $(date '+%Y-%m-%d')"
+          git push
