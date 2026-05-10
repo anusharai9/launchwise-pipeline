@@ -2,8 +2,8 @@ import requests, json, datetime, os
 from pathlib import Path
 
 KEY = os.environ.get("URA_ACCESS_KEY", "b6a1de31-dc9a-47cf-850d-fd602d9209ec")
-TOKEN_URL = "https://www.ura.gov.sg/uraDataService/insertNewToken.action"
-URA_BASE  = "https://www.ura.gov.sg/uraDataService/invokeUraDS"
+TOKEN_URL = "https://eservice.ura.gov.sg/uraDataService/insertNewToken/v1"
+URA_BASE  = "https://eservice.ura.gov.sg/uraDataService/invokeUraDS"
 HEADERS   = {"AccessKey": KEY, "User-Agent": "Mozilla/5.0 (compatible; Launchwise/1.0)"}
 
 REGION = {
