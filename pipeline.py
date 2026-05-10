@@ -2,8 +2,8 @@ import requests, json, datetime, os
 from pathlib import Path
 
 KEY = os.environ.get("URA_ACCESS_KEY", "b6a1de31-dc9a-47cf-850d-fd602d9209ec")
-TOKEN_URL = "https://eservice.ura.gov.sg/uraDataService/insertNewToken/v1"
-URA_BASE  = "https://eservice.ura.gov.sg/uraDataService/invokeUraDS"
+TOKEN_URL = "https://www.ura.gov.sg/uraDataService/insertNewToken.action"
+URA_BASE  = "https://www.ura.gov.sg/uraDataService/invokeUraDS"
 HEADERS   = {"AccessKey": KEY}
 
 REGION = {
@@ -22,7 +22,8 @@ def get_token():
     print("Token raw:", r.text[:300])
     if r.status_code != 200:
         raise Exception(f"Token endpoint returned {r.status_code}")
-    d = r.json()
+    print("Raw response:", r.text[:300])
+d = r.json()
     assert d["Status"] == "Success", f"Token failed: {d}"
     print("Token OK:", d["Result"][:12], "...")
     return d["Result"]
