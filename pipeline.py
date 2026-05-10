@@ -4,7 +4,7 @@ from pathlib import Path
 KEY = os.environ.get("URA_ACCESS_KEY", "b6a1de31-dc9a-47cf-850d-fd602d9209ec")
 TOKEN_URL = "https://eservice.ura.gov.sg/uraDataService/insertNewToken/v1"
 URA_BASE  = "https://eservice.ura.gov.sg/uraDataService/invokeUraDS"
-HEADERS   = {"AccessKey": KEY, "User-Agent": "Mozilla/5.0 (compatible; Launchwise/1.0)"}
+HEADERS   = {"AccessKey": KEY}
 
 REGION = {
     **{str(i): "CCR" for i in [1,2,3,4,5,6,7,8,9,10,11]},
@@ -13,8 +13,15 @@ REGION = {
 }
 
 def get_token():
-    r = requests.get(TOKEN_URL, headers=HEADERS, timeout=20)
+    r = requests.get(
+        TOKEN_URL,
+        headers={"AccessKey": KEY},
+        timeout=20
+    )
     print("Token status:", r.status_code)
+    print("Token raw:", r.text[:300])
+    if r.status_code != 200:
+        raise Exception(f"Token endpoint returned {r.status_code}")
     d = r.json()
     assert d["Status"] == "Success", f"Token failed: {d}"
     print("Token OK:", d["Result"][:12], "...")
