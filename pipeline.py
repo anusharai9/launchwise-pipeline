@@ -12,8 +12,8 @@ print("Time:", datetime.datetime.now().isoformat())
 print("\n--- Step 1: Getting token ---")
 try:
     r = requests.get(
-        "https://www.ura.gov.sg/uraDataService/insertNewToken.action",
-        headers={"AccessKey": KEY},
+        "https://eservice.ura.gov.sg/uraDataService/insertNewToken/v1",
+        headers={"AccessKey: b6a1de31-dc9a-47cf-850d-fd602d9209ec},
         timeout=30
     )
     print("Status:", r.status_code)
