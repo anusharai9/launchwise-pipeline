@@ -13,7 +13,7 @@ print("\n--- Step 1: Getting token ---")
 try:
     r = requests.get(
         "https://eservice.ura.gov.sg/uraDataService/insertNewToken/v1",
-        headers={"AccessKey: b6a1de31-dc9a-47cf-850d-fd602d9209ec},
+        headers={"AccessKey: "b6a1de31-dc9a-47cf-850d-fd602d9209ec"},
         timeout=30
     )
     print("Status:", r.status_code)
